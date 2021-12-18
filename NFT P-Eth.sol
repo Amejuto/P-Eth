@@ -69,7 +69,7 @@ contract NFTPEthContract is ERC721URIStorage{
     //Debe tener tokens suficiente para hacer la puja que quiere
     //Si se cumplen todos los requisitos, entonces se transfiere la puja al contrato.
     //Antes de que la cantidad pujada sea ahora la puja actual, la anterior puja actual se le devuelve al anterior pujante. Es lo que está dentro del "if". Solo si la puja actual era mayor que 0, ya que si es 0 nadie habia pujado todavia.
-    //Una vez se le devuelva la puja, ahora si que la cantidad pujada se hace la puja actual y el pujante mas alto es el que acaba de pujar.
+    //Una vez se le devuelva la puja, ahora si que la cantidad pujada se convierte en la puja actual y el pujante mas alto es el que acaba de pujar.
     //Se suma una puja y asi llevar el conteo de las pujas.
 
     function pujar(uint cantidad) public returns (string memory) {
@@ -81,7 +81,6 @@ contract NFTPEthContract is ERC721URIStorage{
             Transfer(_pujanteMasAlto, _pujaActual);
         }
 
-       //Ahora hacemos que la puja mas alta es la que acaban de pujar y el pujante mas alto el que acaba de pujar
         
         _pujaActual = cantidad;
         _pujanteMasAlto = msg.sender;
@@ -92,7 +91,7 @@ contract NFTPEthContract is ERC721URIStorage{
 
 
 
-    //Con la funcion get_NFT se permite que el pujante mas alto reciba su NFT
+    //Con la funcion get_NFT se permite que el pujante mas alto pida y se le envíe su NFT
 
     function get_NFT(address pujanteMasAlto, string memory tokenURI) public returns (string memory) {
         if (MPuja > 1640386799){
@@ -119,6 +118,9 @@ contract NFTPEthContract is ERC721URIStorage{
     }
 
 
+
+    //La siguiente funcion permite transformar los uint a string para los returns realizados anteriormente
+    
     function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
         if (_i == 0) return "0";
         uint j = _i;
